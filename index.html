@@ -1,13 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
-    <h1>LINEAR REGRESSION FROM DIAMOND </h1>
-</body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="./index.js"></script>
+  </head>
+  <style>
+    .container {
+      display: flex;
+      justify-content: space-evenly;
+    }
+  </style>
+  <body>
+    <h1>LINEAR REGRESSION FROM DIAMOND</h1>
+    <!-- // console.log(Ydata,"DATA");
+   // console.log(xTableWidth,"TABLE"); 1
+   // console.log(xDepthTotal,"DEPTH"); 2
+   // console.log(xCarat,"CARAT");      3
+   // console.log(xColor,"COLOR");      4 
+   // console.log(xCut,"CUT");          5
+   // console.log(xClarity,"CLARITY");  6 -->
+    <div class="container">
+      <div class="satu">
+        <h2>TableWidth</h2>
+        <input type="number" name="" id="1" />
+      </div>
+
+      <div class="dua">
+        <h2>DepthTotal</h2>
+        <input type="number" name="" id="2" />
+      </div>
+
+      <div class="tiga">
+        <h2>Carat</h2>
+        <input type="number" name="" id="3" />
+      </div>
+
+      <div class="empat">
+        <h2>Color</h2>
+        <input type="number" name="" id="4" />
+      </div>
+      <div class="lima">
+        <h2>Cut</h2>
+        <input type="number" name="" id="5" />
+      </div>
+      <div class="enam">
+        <h2>Clarity</h2>
+        <input type="number" name="" id="6" />
+      </div>
+    </div>
+    <h1>Predicted Price</h1>
+    <h3 id="calculated">$</h3>
+  </body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="./index.js"></script>
 </html>
