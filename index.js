@@ -1,5 +1,6 @@
 let length = 0;
 const ALPHA  = 0;
+
 //dictionary buat cutnya
 /**Describe cut quality of the diamond. Quality in increasing order Fair, Good, Very Good, Premium, Ideal */
 let dictForCut = {
@@ -47,10 +48,46 @@ fetch("./diamond.json")
 .then(data => {
    //pindah ke diamondData biar jelas
    let diamondData = data;
-   console.log(diamondData);
-   //init
+
+   //inisialisasi semua unsur yang akan digunakan dalam linear reg
+   let xCut = [];
+   let xColor = [];
+   let xClarity = [];
+
+   //inisialisasi tempat Y data akan berdiam
+   let Ydata = [];
+
+   // inisialisasi tempat Y sesuai rumus theta nantinya 
+   let Y = [];
+
+   //panjang dari diamond data
    length = diamondData.length;
-   //dah tinggal di coding
+   
+   //mengambil data data dari json yang ada dan dipisah ke array array agar lebih mudah dikerjakan 
+   getYfromData(Ydata,xColor,xCut,xClarity,diamondData);
+
    
 });
+
+function getYfromData(Ydata,xColor,xCut,xClarity,diamondData){
+   for(let i = 0; i < length; i++){
+      //memasukkan data dari harga diamond yang menjadi acuan Y
+      Ydata.push(diamondData[i]['price']);
+      xClarity.push(translateToNumber("clarity",diamondData[i]['clarity']));
+      xColor.push(translateToNumber("color",diamondData[i]['color']));
+      xCut.push(translateToNumber("cut",diamondData[i]['cut']));
+   }
+}
+
+function translateToNumber(type,string){
+   if(type == "clarity"){
+      return dictForClarity[string];
+   }else if(type == "color"){
+      return dictForColor[string];
+   }else if(type == "cut"){
+      return dictForCut[string];
+   }else{
+      console.log("failed to process");
+   }
+}
 
