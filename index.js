@@ -49,7 +49,7 @@ fetch("./diamond.json")
    //pindah ke diamondData biar jelas
    let diamondData = data;
 
-   //inisialisasi semua unsur yang akan digunakan dalam linear reg
+   //inisialisasi semua unsur yang akan digunakan dalam linear reg (belum semua)
    let xCut = [];
    let xColor = [];
    let xClarity = [];
@@ -79,6 +79,8 @@ function getYfromData(Ydata,xColor,xCut,xClarity,diamondData){
    }
 }
 
+
+// hanya untuk translate ke angka yang ada dalam dictionary
 function translateToNumber(type,string){
    if(type == "clarity"){
       return dictForClarity[string];
