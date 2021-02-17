@@ -88,6 +88,7 @@ fetch("./diamond.json")
       diamondData
     );
 
+    // mempermudah visualisasi dari setiap array yang telah di buat
     // console.log(Ydata,"DATA");
     // console.log(xTableWidth,"TABLE"); 1
     // console.log(xDepthTotal,"DEPTH"); 2
@@ -109,6 +110,7 @@ fetch("./diamond.json")
     let cost = 100;
     let ctr = 1;
 
+    //x hanya untuk mencatat setiap theta
     let x = "";
     for (let i = 0; i < NUM_OF_THETA; i++) {
       theta[i] = theta[i] - (sumTheta(i) * ALPHA) / length;
@@ -116,8 +118,8 @@ fetch("./diamond.json")
       `;
     }
 
+    //threshold max itu 0.1 / 10%
     while (cost > THRESHOLD) {
-      console.log("work");
       let x = "";
       for (let i = 0; i < NUM_OF_THETA; i++) {
         theta[i] = theta[i] - (sumTheta(i) * ALPHA) / length;
@@ -125,16 +127,19 @@ fetch("./diamond.json")
          `;
       }
       cost = (1 / length) * 2 * sumWithNewTheta();
+
+      //ngeprint output dari setiap iterasi
       console.log(`Iteration Number - ${ctr} |
        ${x} | COST : ${cost}`);
       ctr++;
     }
 
+    //ngeprint hasil dari price yang ditebak dan price yang sebenarnya
     console.log(Y, Ydata);
   });
 
 function sumWithNewTheta() {
-  //getting the new Y
+  //mendapatkan nilai y yang baru
   let ans = 0;
   for (let i = 0; i < length; i++) {
     let x1 = theta[1] * xTableWidth[i];
@@ -152,6 +157,7 @@ function sumWithNewTheta() {
 }
 
 function sumTheta(num) {
+  //ngitung semua theta yang ada
   let ans = 0;
   for (let i = 0; i < length; i++) {
     if (num == 0) {
