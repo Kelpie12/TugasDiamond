@@ -24,7 +24,7 @@ let Y = [];
 //panjang dari diamond data
 
 //threshold itu batasannya agar looping selesai / konvergen
-const THRESHOLD = 0.1;
+const THRESHOLD = 0.025;
 
 let theta = [];
 
@@ -47,7 +47,7 @@ let dictForColor = {
   F: 5 / 7,
   G: 4 / 7,
   H: 3 / 7,
-  I: 3 / 7,
+  I: 2 / 7,
   J: 1 / 7,
 };
 //dictionary buat clarity
@@ -111,12 +111,12 @@ fetch("./diamond.json")
     let ctr = 1;
 
     //x hanya untuk mencatat setiap theta
-    let x = "";
+    /*let x = "";
     for (let i = 0; i < NUM_OF_THETA; i++) {
       theta[i] = theta[i] - (sumTheta(i) * ALPHA) / length;
       x += `Theta ${i} - ${theta[i]}
       `;
-    }
+    }*/
 
     //threshold max itu 0.1 / 10%
     while (cost > THRESHOLD) {
@@ -126,7 +126,7 @@ fetch("./diamond.json")
         x += `Theta ${i} - ${theta[i]}
          `;
       }
-      cost = (1 / length) * 2 * sumWithNewTheta();
+      cost = 1 / (length * 2)  * sumWithNewTheta();
 
       //ngeprint output dari setiap iterasi
       console.log(`Iteration Number - ${ctr} |
@@ -135,6 +135,7 @@ fetch("./diamond.json")
     }
 
     //ngeprint hasil dari price yang ditebak dan price yang sebenarnya
+    
     console.log(Y, Ydata);
   });
 
