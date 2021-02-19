@@ -26,6 +26,7 @@ carat = list()
 cut = list()
 clarity = list()
 color = list()
+#table dan depth tidak dipakai
 table = list()
 depth = list()
 cost = 100
@@ -36,7 +37,7 @@ MAX_CARAT = 5.01
 MAX_X = 10.74
 MAX_Y = 58.9
 MAX_Z = 31.8
-NUM_OF_X = 6
+NUM_OF_X = 7
 NUM_OF_THETA = NUM_OF_X + 1
 theta = [0] * NUM_OF_THETA
 THRESHOLD = 0.025
@@ -99,31 +100,21 @@ def translate(input,type):
 
 #looping untuk semua datanya
 for data in diamondData:
-    # price_data.append(normalizedPrice(float(data['price'])))
-    # price_output.append(normalizedPrice(float(data['price'])))
-    #
-    # X.append(normalizedX(float(data['x'])))
-    # Y.append(normalizedY(float(data['y'])))
-    # Z.append(normalizedZ(float(data['z'])))
-    #
-    # clarity.append(translate(data['clarity'], 'clarity'))
-    # color.append(translate(data['color'], 'color'))
-    # cut.append(translate(data['cut'], 'cut'))
-    #
-    # carat.append(normalizedCarat(float(data['carat'])))
-    # table.append(normalized_table_and_depth(float(data['table'])))
-    # depth.append(normalized_table_and_depth(float(data['depth'])))
+    price_data.append(normalizedPrice(float(data['price'])))
+    price_output.append(normalizedPrice(float(data['price'])))
 
-    price_data.append(float(data['price']))
-    price_output.append(float(data['price']))
+    X.append(normalizedX(float(data['x'])))
+    Y.append(normalizedY(float(data['y'])))
+    Z.append(normalizedZ(float(data['z'])))
 
-    X.append(float(data['x']))
-    Y.append(float(data['y']))
-    Z.append(float(data['z']))
+    clarity.append(translate(data['clarity'], 'clarity'))
+    color.append(translate(data['color'], 'color'))
+    cut.append(translate(data['cut'], 'cut'))
+    carat.append(normalizedCarat(float(data['carat'])))
 
-    carat.append(float(data['carat']))
-    table.append(float(data['table']))
-    depth.append(float(data['depth']))
+    #table dan depth tidak di pakai
+    table.append(normalized_table_and_depth(float(data['table'])))
+    depth.append(normalized_table_and_depth(float(data['depth'])))
 
 #for tracing
 # for i in range(LENGTH):
@@ -148,31 +139,17 @@ def sum_theta(paramI):
         elif paramI == 3:
             ans += (theta[paramI] - price_output[i]) * Z[i]
         elif paramI == 4:
-            ans += (theta[paramI] - price_output[i]) * carat[i]
+            ans += (theta[paramI] - price_output[i]) * clarity[i]
         elif paramI == 5:
-            ans += (theta[paramI] - price_output[i]) * table[i]
+            ans += (theta[paramI] - price_output[i]) * color[i]
         elif paramI == 6:
+            ans += (theta[paramI] - price_output[i]) * cut[i]
+        elif paramI == 7:
+            ans += (theta[paramI] - price_output[i]) * carat[i]
+        elif paramI == 8:
+            ans += (theta[paramI] - price_output[i]) * table[i]
+        elif paramI == 9:
             ans += (theta[paramI] - price_output[i]) * depth[i]
-        # if paramI == 0:
-        #     ans += theta[paramI] - price_output[i]
-        # elif paramI == 1:
-        #     ans += (theta[paramI] - price_output[i]) * X[i]
-        # elif paramI == 2:
-        #     ans += (theta[paramI] - price_output[i]) * Y[i]
-        # elif paramI == 3:
-        #     ans += (theta[paramI] - price_output[i]) * Z[i]
-        # elif paramI == 4:
-        #     ans += (theta[paramI] - price_output[i]) * clarity[i]
-        # elif paramI == 5:
-        #     ans += (theta[paramI] - price_output[i]) * color[i]
-        # elif paramI == 6:
-        #     ans += (theta[paramI] - price_output[i]) * cut[i]
-        # elif paramI == 7:
-        #     ans += (theta[paramI] - price_output[i]) * carat[i]
-        # elif paramI == 8:
-        #     ans += (theta[paramI] - price_output[i]) * table[i]
-        # elif paramI == 9:
-        #     ans += (theta[paramI] - price_output[i]) * depth[i]
     return ans
 
 def sum_with_new_theta():
@@ -188,14 +165,13 @@ def get_new_price_output():
         x1 = theta[1] * X[i]
         x2 = theta[2] * Y[i]
         x3 = theta[3] * Z[i]
-        # x4 = theta[4] * clarity[i]
-        # x5 = theta[5] * color[i]
-        # x6 = theta[6] * cut[i]
-        x7 = theta[4] * carat[i]
-        x8 = theta[5] * table[i]
-        x9 = theta[6] * depth[i]
-        # price_output[i] = theta[0] + x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9
-        price_output[i] = theta[0] + x1 + x2 + x3 + x7 + x8 + x9
+        x4 = theta[4] * clarity[i]
+        x5 = theta[5] * color[i]
+        x6 = theta[6] * cut[i]
+        x7 = theta[7] * carat[i]
+        # x8 = theta[8] * table[i]
+        # x9 = theta[9] * depth[i]
+        price_output[i] = theta[0] + x1 + x2 + x3 + x4 + x5 + x6 + x7
         #price_output[i] = theta[0] + x1 + x2 + x3 + x6 + x7
 
 ctr = 0
@@ -220,5 +196,12 @@ for i in range(LENGTH):
 
 final.write("\n \n MAX DIFFERENCE : " + str(max(diff)) + " \n  MIN DIFFERENCE : " + str(min(diff)))
 final.close()
+
+thetas = open("theta.txt","w")
+
+for i in range(NUM_OF_THETA):
+    thetas.write("THETA NUM - " + str(i) + " : " + str(theta[i]) + "\n")
+thetas.close()
+print("theta done")
 
 print("done final")
