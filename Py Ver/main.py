@@ -9,14 +9,10 @@ with open(filename, 'r') as data:
     for line in csv.DictReader(data):
         diamondData.append(line)
 
-
-
 # output dari price dengan theta yang kita buat
 price_output = list()
 # price data yang diambil dari data asli
 price_data = list()
-
-
 
 # variabel yang digunakan ( x, y, z, carat, cut, clarity, color)
 X = list()
@@ -26,9 +22,11 @@ carat = list()
 cut = list()
 clarity = list()
 color = list()
+
 #table dan depth tidak dipakai
 table = list()
 depth = list()
+
 cost = 100
 
 #CONSTANT
@@ -86,8 +84,6 @@ def normalizedY(x):
     return x/MAX_Y
 def normalizedZ(x):
     return x/MAX_Z
-def normalized_table_and_depth(x):
-    return x/100
 
 
 def translate(input,type):
@@ -146,10 +142,6 @@ def sum_theta(paramI):
             ans += (theta[paramI] - price_output[i]) * cut[i]
         elif paramI == 7:
             ans += (theta[paramI] - price_output[i]) * carat[i]
-        elif paramI == 8:
-            ans += (theta[paramI] - price_output[i]) * table[i]
-        elif paramI == 9:
-            ans += (theta[paramI] - price_output[i]) * depth[i]
     return ans
 
 def sum_with_new_theta():
@@ -169,10 +161,7 @@ def get_new_price_output():
         x5 = theta[5] * color[i]
         x6 = theta[6] * cut[i]
         x7 = theta[7] * carat[i]
-        # x8 = theta[8] * table[i]
-        # x9 = theta[9] * depth[i]
         price_output[i] = theta[0] + x1 + x2 + x3 + x4 + x5 + x6 + x7
-        #price_output[i] = theta[0] + x1 + x2 + x3 + x6 + x7
 
 ctr = 0
 file = open("getIteration.txt","w")
