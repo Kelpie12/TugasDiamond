@@ -109,8 +109,8 @@ for data in diamondData:
     carat.append(normalizedCarat(float(data['carat'])))
 
     #table dan depth tidak di pakai
-    table.append(normalized_table_and_depth(float(data['table'])))
-    depth.append(normalized_table_and_depth(float(data['depth'])))
+    # table.append(normalized_table_and_depth(float(data['table'])))
+    # depth.append(normalized_table_and_depth(float(data['depth'])))
 
 #for tracing
 # for i in range(LENGTH):
