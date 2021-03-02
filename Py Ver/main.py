@@ -41,6 +41,7 @@ theta = [0] * NUM_OF_THETA
 THRESHOLD = 0.025
 ALPHA = 0.01
 LENGTH = len(diamondData)
+LAMBDA = 0.5
 
 
 #DICTIONARY
@@ -142,7 +143,14 @@ def sum_theta(paramI):
             ans += (theta[paramI] - price_output[i]) * cut[i]
         elif paramI == 7:
             ans += (theta[paramI] - price_output[i]) * carat[i]
-    return ans
+    if(LAMBDA>0):
+        if(paramI == 0):
+            return ans
+        else:
+            return ans - LAMBDA * theta[paramI] / LENGTH
+    else:
+        return ans
+
 
 def sum_with_new_theta():
     get_new_price_output()
@@ -164,7 +172,10 @@ def get_new_price_output():
         price_output[i] = theta[0] + x1 + x2 + x3 + x4 + x5 + x6 + x7
 
 ctr = 0
-file = open("getIteration.txt","w")
+if(LAMBDA>0):
+    file = open("getIteration.txt","w")
+else:
+    file = open("getIterationWOL.txt", "w")
 while(cost >= THRESHOLD):
     for i in range(NUM_OF_THETA):
         theta[i] = theta[i] - sum_theta(i) * ALPHA / LENGTH
@@ -176,7 +187,10 @@ while(cost >= THRESHOLD):
 file.close()
 print("done")
 
-final = open("Output.txt","w")
+if(LAMBDA>0):
+    final = open("Output.txt","w")
+else:
+    final = open("OutputWOL.txt", "w")
 diff = list()
 
 for i in range(LENGTH):
@@ -186,7 +200,10 @@ for i in range(LENGTH):
 final.write("\n \n MAX DIFFERENCE : " + str(max(diff)) + " \n  MIN DIFFERENCE : " + str(min(diff)))
 final.close()
 
-thetas = open("theta.txt","w")
+if(LAMBDA>0):
+    thetas = open("theta.txt","w")
+else:
+    thetas = open("thetaWOL.txt","w")
 
 for i in range(NUM_OF_THETA):
     thetas.write("THETA NUM - " + str(i) + " : " + str(theta[i]) + "\n")
